@@ -1,22 +1,57 @@
-// 🐨 you'll need to import react and createRoot from react-dom up here
+import '@reach/dialog/styles.css'
 import React from 'react'
 import {createRoot} from 'react-dom/client'
-
-// 🐨 you'll also need to import the Logo component from './components/logo'
 import {Logo} from './components/logo'
+import {Dialog} from '@reach/dialog'
+import {VisuallyHidden} from '@reach/visually-hidden'
 
-// 🐨 create an App component here and render the logo, the title ("Bookshelf"), a login button, and a register button.
-const App = function ({handleClick}) {
+const LoginDialog = ({isOpen, closeDialog}) => {
+  return (
+    <Dialog isOpen={isOpen} onDismiss={closeDialog} aria-label="Login form">
+      <button className="close-button" onClick={closeDialog}>
+        <VisuallyHidden>Close</VisuallyHidden>
+        <span aria-hidden>×</span>
+      </button>
+      <h3>Login</h3>
+    </Dialog>
+  )
+}
+
+const RegisterDialog = ({isOpen, closeDialog}) => {
+  return (
+    <Dialog
+      isOpen={isOpen}
+      onDismiss={closeDialog}
+      aria-label="Registration form"
+    >
+      <button className="close-button" onClick={closeDialog}>
+        <VisuallyHidden>Close</VisuallyHidden>
+        <span aria-hidden>×</span>
+      </button>
+      <h3>Register</h3>
+    </Dialog>
+  )
+}
+
+const App = ({handleClick}) => {
+  const [openDialog, setOpenDialog] = React.useState('none')
+  const closeDialog = () => setOpenDialog('none')
+
   return (
     <div>
       <Logo height="80" width="80" />
       <h1>Bookshelf</h1>
       <div>
-        <button onClick={() => handleClick('Login')}>Login</button>
+        <button onClick={() => setOpenDialog('login')}>Login</button>
       </div>
       <div>
-        <button onClick={() => handleClick('Register')}>Register</button>
+        <button onClick={() => setOpenDialog('register')}>Register</button>
       </div>
+      <LoginDialog isOpen={openDialog === 'login'} closeDialog={closeDialog} />
+      <RegisterDialog
+        isOpen={openDialog === 'register'}
+        closeDialog={closeDialog}
+      />
     </div>
   )
 }
