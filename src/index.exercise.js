@@ -22,7 +22,6 @@ function LoginForm({onSubmit, submitButton}) {
 
   return (
     <form
-      onSubmit={handleSubmit}
       css={{
         display: 'flex',
         flexDirection: 'column',
@@ -33,6 +32,7 @@ function LoginForm({onSubmit, submitButton}) {
           maxWidth: '300px',
         },
       }}
+      onSubmit={handleSubmit}
     >
       <FormGroup>
         <label htmlFor="username">Username</label>
