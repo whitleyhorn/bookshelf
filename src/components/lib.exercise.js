@@ -1,15 +1,11 @@
 import styled from '@emotion/styled/macro'
 import {Dialog as ReachDialog} from '@reach/dialog'
-import {keyframes, css} from '@emotion/react'
+import {keyframes} from '@emotion/react'
 import {FaSpinner} from 'react-icons/fa'
 import * as colors from 'styles/colors'
 import * as mq from 'styles/media-queries'
 
 const spin = keyframes`
-  from { -moz-transform: rotate(0deg); }
-  to { -moz-transform: rotate(360deg); }
-  from { -webkit-transform: rotate(0deg); }
-  to { -webkit-transform: rotate(360deg); }
   from {transform:rotate(0deg);}
   to {transform:rotate(360deg);}
 `
