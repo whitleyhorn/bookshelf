@@ -19,13 +19,9 @@ function BookRow({book}) {
         position: 'relative',
       }}
     >
-      {/*
-          🐨 Turn this div into a Link
-          and add a to prop to make it direct to `/book/${book.id}`
-      */}
       <Link
-        to={`/book/${book.id}`}
         aria-labelledby={id}
+        to={`/book/${book.id}`}
         css={{
           minHeight: 270,
           flexGrow: 2,

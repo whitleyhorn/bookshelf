@@ -19,7 +19,6 @@ const loadingBook = {
 
 function BookScreen({user}) {
   const {bookId} = useParams()
-
   const {data, run} = useAsync()
 
   React.useEffect(() => {
