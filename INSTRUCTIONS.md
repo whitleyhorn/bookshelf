@@ -16,6 +16,14 @@
 ## 📝 Your Notes
 
 Elaborate on your learnings here in `INSTRUCTIONS.md`
+Two types of state:
+1. UI state
+2. Server Cache
+
+Don't lump these together! This causes people to make UI state global (which is bad).
+
+To manage server cache, you can use react-query.
+
 
 ## Background
 
