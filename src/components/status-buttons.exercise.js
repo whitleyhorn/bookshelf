@@ -58,11 +58,9 @@ function TooltipButton({label, highlight, onClick, icon, ...rest}) {
 function StatusButtons({user, book}) {
   const listItem = useListItem(user, book.id)
 
-  const mutateOptions = {throwOnError: true}
-
-  const [update] = useUpdateListItem(user, mutateOptions)
-  const [remove] = useRemoveListItem(user, mutateOptions)
-  const [create] = useCreateListItem(user, mutateOptions)
+  const [update] = useUpdateListItem(user, {throwOnError: true})
+  const [remove] = useRemoveListItem(user, {throwOnError: true})
+  const [create] = useCreateListItem(user, {throwOnError: true})
 
   return (
     <React.Fragment>

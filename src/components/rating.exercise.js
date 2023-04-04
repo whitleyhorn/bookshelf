@@ -99,6 +99,7 @@ function Rating({listItem, user}) {
         },
       }}
     >
+      <span css={{display: 'flex'}}>{stars}</span>
       {isError ? (
         <ErrorMessage
           error={error}
@@ -106,7 +107,6 @@ function Rating({listItem, user}) {
           css={{marginLeft: 6, fontSize: '0.7em'}}
         />
       ) : null}
-      <span css={{display: 'flex'}}>{stars}</span>
     </div>
   )
 }
