@@ -16,18 +16,22 @@ const loadingBooks = Array.from({length: 10}, (v, index) => ({
   ...loadingBook,
 }))
 
+const setQueryDataForBook = book => {
+  const bookId = book.id
+  console.log(bookId, book)
+  queryCache.setQueryData(['book', {bookId}], book)
+}
+
 const getBookSearchConfig = (query, user) => ({
   queryKey: ['bookSearch', {query}],
   queryFn: () =>
     client(`books?query=${encodeURIComponent(query)}`, {
       token: user.token,
     }).then(data => data.books),
+  config: {
+    onSuccess: searchData => searchData.forEach(setQueryDataForBook),
+  },
 })
-
-function refetchBookSearchQuery(user) {
-  queryCache.removeQueries('bookSearch')
-  queryCache.prefetchQuery(getBookSearchConfig('', user))
-}
 
 function useBookSearch(query, user) {
   const result = useQuery(getBookSearchConfig(query, user))
@@ -43,4 +47,9 @@ function useBook(bookId, user) {
   return data ?? loadingBook
 }
 
-export {useBook, useBookSearch, refetchBookSearchQuery}
+async function refetchBookSearchQuery(user) {
+  queryCache.removeQueries('bookSearch')
+  await queryCache.prefetchQuery(getBookSearchConfig('', user))
+}
+
+export {useBook, useBookSearch, refetchBookSearchQuery, setQueryDataForBook}
