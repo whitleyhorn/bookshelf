@@ -1,5 +1,7 @@
-import {createContext} from 'react'
+import * as React from 'react'
 
-const AuthContext = createContext({})
+const AuthContext = React.createContext()
 
-export {AuthContext}
+const useAuth = () => React.useContext(AuthContext)
+
+export {AuthContext, useAuth}
