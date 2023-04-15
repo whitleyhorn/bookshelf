@@ -1,43 +1,40 @@
-import {Dialog} from './lib'
+/** @jsx jsx */
+import {jsx} from '@emotion/core'
+
 import * as React from 'react'
+import {Dialog} from './lib'
 
 const ModalContext = React.createContext()
-ModalContext.displayName = 'ModalContext'
 
-function Modal({children}) {
+const callAll =
+  (...fns) =>
+  (...args) =>
+    fns.forEach(fn => fn && fn(...args))
+
+function Modal(props) {
   const [isOpen, setIsOpen] = React.useState(false)
 
-  return (
-    <ModalContext.Provider value={{isOpen, setIsOpen}}>
-      {children}
-    </ModalContext.Provider>
-  )
+  return <ModalContext.Provider value={[isOpen, setIsOpen]} {...props} />
 }
 
-function ModalButton({children, isOpenValue}) {
-  if (Array.isArray(children))
-    throw new Error('Only one button should be passed to <ModalDismissButton/>')
-  const {setIsOpen} = React.useContext(ModalContext)
-
-  return React.cloneElement(children, {
-    onClick: () => setIsOpen(isOpenValue),
+function ModalDismissButton({children: child}) {
+  const [, setIsOpen] = React.useContext(ModalContext)
+  return React.cloneElement(child, {
+    onClick: callAll(() => setIsOpen(false), child.props.onClick),
   })
 }
 
-function ModalDismissButton({children}) {
-  return <ModalButton children={children} isOpenValue={false} />
-}
-
-function ModalOpenButton({children}) {
-  return <ModalButton children={children} isOpenValue={true} />
+function ModalOpenButton({children: child}) {
+  const [, setIsOpen] = React.useContext(ModalContext)
+  return React.cloneElement(child, {
+    onClick: callAll(() => setIsOpen(true), child.props.onClick),
+  })
 }
 
 function ModalContents(props) {
-  const {isOpen, setIsOpen} = React.useContext(ModalContext)
+  const [isOpen, setIsOpen] = React.useContext(ModalContext)
   return (
-    <Dialog isOpen={isOpen} onDismiss={() => setIsOpen(false)} {...props}>
-      {props.children}
-    </Dialog>
+    <Dialog isOpen={isOpen} onDismiss={() => setIsOpen(false)} {...props} />
   )
 }
 
